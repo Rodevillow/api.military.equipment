@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\ItemController;
+use App\Http\Controllers\Api\JWTAuthController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,19 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('login', [JWTAuthController::class, 'unauthenticated'])->name('login');
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('register', [JWTAuthController::class, 'register']);
+    Route::post('login', [JWTAuthController::class, 'login']);
+    Route::post('logout', [JWTAuthController::class, 'logout']);
+    Route::post('refresh', [JWTAuthController::class, 'refresh']);
+    Route::get('profile', [JWTAuthController::class, 'profile']);
+});
 
 Route::resource('users', UserController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
 Route::resource('items', ItemController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+
