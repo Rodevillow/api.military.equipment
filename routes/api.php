@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('test', function () {
+    dd('TEST');
+});
 Route::get('login', [JWTAuthController::class, 'unauthenticated'])->name('login');
 
 Route::group([
