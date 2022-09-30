@@ -86,7 +86,7 @@ class JWTAuthController extends Controller
 
         if (!$token = auth()->attempt($validator->validated())) {
             return response()->json([
-                'message' => 'Successfully logged',
+                'message' => 'Invalid login or password!',
                 'error' => 'Unauthorized'
             ], 401);
         }
